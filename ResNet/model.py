@@ -35,7 +35,7 @@ class Model(nn.Module):
         nn.init.xavier_uniform_(self.fc3.weight)
 
     def forward(self, x):
-        x = self.maxPool(self.bnrom(self.conv1(x)))
+        x = self.maxPool(self.relu(self.bnrom(self.conv1(x))))
         x = self.res_block1b(self.res_block1a(x))
         x = self.res_block2b(self.res_block2a(x))
         x = self.res_block3b(self.res_block3a(x))

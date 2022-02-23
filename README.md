@@ -7,5 +7,11 @@
 <br/>
 
 ## Table of Contents
+
+#### 1. Modern Convolutional Neural Networks
 * [Inception](./Inception/main.py)
 * [RestNet](./ResNet/main.py)
+* [DenseNet](./DenseNet/main.py)
+
+#### 2. Projects
+* [Sentiment Analysis with PhoBERT](./Sentiment_Analysis/PhoBERT.ipynb)
