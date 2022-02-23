@@ -14,4 +14,4 @@
 * [DenseNet](./DenseNet/main.py)
 
 #### 2. Projects
-* [Sentiment Analysis with PhoBERT](./Sentiment_Analysis/PhoBERT.ipynb)
+* [Sentiment Analysis with PhoBERT](./Sentiment_Analysis/PhoBERT_K_Fold.ipynb)
