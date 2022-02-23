@@ -9,7 +9,6 @@ from multiprocessing import freeze_support
 
 def train(epoch):
     model.train()
-    history_acc = []
     history_loss = []
     for batch_idx, (data, target) in enumerate(train_loader):
         data = data.to(device)
@@ -25,11 +24,9 @@ def train(epoch):
                 epoch, batch_idx*len(data), len(train_loader.dataset),
                 100*batch_idx/len(train_loader), loss.data.item()
             ))
-        history_acc.append(batch_idx/len(train_loader))
         history_loss.append(loss.data.item())
     history_loss = np.array(history_loss)
-    history_acc = np.array(history_acc)
-    return np.mean(history_acc), np.mean(history_loss)
+    return np.mean(history_loss)
 
 def test():
     model.eval()
@@ -48,7 +45,7 @@ def test():
     print('\nTest set: Average Loss: {:.4f}, Accuracy: {}/{} ({:.0f})\n'.format(
         total_loss, correct, len(test_loader.dataset), 100*correct/len(test_loader.dataset)
     ))
-    return total_loss
+    return total_loss, 100*correct/len(test_loader.dataset)
 
 if __name__ == '__main__':
     freeze_support()
@@ -61,15 +58,15 @@ if __name__ == '__main__':
 
     h_acc, h_loss, h_val_loss = [], [], []
     for epoch in range(1, 20):
-        acc, loss = train(epoch)
-        val_loss = test()
-        h_acc.append(acc)
+        loss = train(epoch)
+        val_loss, val_acc = test()
+        h_acc.append(val_acc)
         h_loss.append(loss)
         h_val_loss.append(val_loss)
     
     x = np.arange(1,20)
-    plt.plot(x, h_acc, label='Train Accuracy')
     plt.plot(x, h_loss, label='Train Loss')
+    plt.plot(x, h_acc, label='Val Accuracy')
     plt.plot(x, h_val_loss, label='Val loss')
     plt.legend()
     plt.grid()

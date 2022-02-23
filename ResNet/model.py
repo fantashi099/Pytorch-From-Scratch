@@ -24,8 +24,15 @@ class Model(nn.Module):
         self.res_block4b = ResNet(512, 512)
 
         self.global_AvgPool = nn.AdaptiveAvgPool2d((1,1))
-        self.fc = nn.Linear(512, num_classes)
+        self.fc1 = nn.Linear(512, 4096)
+        self.fc2 = nn.Linear(4096, 4096)
+        self.fc3 = nn.Linear(4096, num_classes)
         self.softmax = nn.Softmax(dim=1)
+        self.relu = nn.ReLU()
+        self.dropout = nn.Dropout(0.5)
+        nn.init.xavier_uniform_(self.fc1.weight)
+        nn.init.xavier_uniform_(self.fc2.weight)
+        nn.init.xavier_uniform_(self.fc3.weight)
 
     def forward(self, x):
         x = self.maxPool(self.bnrom(self.conv1(x)))
@@ -38,5 +45,7 @@ class Model(nn.Module):
         # just set the output size to (1, 1)
         x = self.global_AvgPool(x)
         x = torch.flatten(x, 1)
-        x = self.fc(x)
+        x = self.relu(self.fc1(x))
+        x = self.relu(self.fc2(x))
+        x = self.fc3(x)
         return self.softmax(x)
