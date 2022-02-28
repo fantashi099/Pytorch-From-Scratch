@@ -7,7 +7,7 @@
 <br/>
 
 ## Table of Contents
-
+3
 #### 1. Modern Convolutional Neural Networks
 * [Inception](./Inception/main.py)
 * [RestNet](./ResNet/main.py)

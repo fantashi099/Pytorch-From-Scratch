@@ -14,7 +14,6 @@ class Model(nn.Module):
 
         self.relu = nn.ReLU()
         self.maxpool = nn.MaxPool2d(2)
-        self.logsoftmax = nn.LogSoftmax()
         self.fc = nn.Linear(2200,10)
     
     def forward(self, x):
@@ -23,5 +22,5 @@ class Model(nn.Module):
         x = self.relu(self.maxpool(self.conv2(x)))
         x = self.incept2(x)
         x = torch.flatten(x, 1)
-        x = self.logsoftmax(self.fc(x))
+        x = self.fc(x)
         return x

@@ -56,7 +56,7 @@ if __name__ == '__main__':
     optimizer = torch.optim.SGD(model.parameters(),lr=0.01, momentum=0.5)
 
     h_acc, h_loss, h_val_loss = [], [], []
-    for epoch in range(1, 20):
+    for epoch in range(1, 10):
         loss = train(epoch)
         val_loss, val_acc  = test()
         h_acc.append(val_acc)

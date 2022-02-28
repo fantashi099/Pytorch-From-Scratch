@@ -23,7 +23,6 @@ class Model(nn.Module):
         self.fc1 = nn.Linear(self.in_channels, 4096)
         self.fc2 = nn.Linear(4096, 4096)
         self.fc3 = nn.Linear(4096, num_classes)
-        self.softmax = nn.Softmax(dim=1)
         self.relu = nn.ReLU()
         nn.init.xavier_uniform_(self.fc1.weight)
         nn.init.xavier_uniform_(self.fc2.weight)
@@ -57,4 +56,4 @@ class Model(nn.Module):
         x = self.relu(self.fc1(x))
         x = self.relu(self.fc2(x))
         x = self.fc3(x)
-        return self.softmax(x)
+        return x
