@@ -28,7 +28,7 @@ def create_variable(tensor):
     else:
         return Variable(tensor)
 
-def str2ascii_ar(msg):
+def str2ascii_arr(msg):
     arr = [ord(c) for c in msg]
     return arr, len(arr)
 
@@ -48,7 +48,7 @@ def pad_sequences(vectorized_seqs, seq_lengths, countries):
     # Sort the target (countries) by seq_len
     target = countries2tensor(countries)
     if len(countries):
-        target == target[perm_idx]
+        target = target[perm_idx]
     
     # DataParallel requires everything to be a Variable
     return create_variable(seq_tensor), \
@@ -56,7 +56,7 @@ def pad_sequences(vectorized_seqs, seq_lengths, countries):
         create_variable(target)
 
 def make_variable(names, countries):
-    sequence_and_length = [str2ascii_ar(name) for name in names]
+    sequence_and_length = [str2ascii_arr(name) for name in names]
     vectorized_seqs = [sl[0] for sl in sequence_and_length]
     seq_lengths = [sl[1] for sl in sequence_and_length]
     seq_lengths = torch.LongTensor(seq_lengths)
@@ -102,6 +102,7 @@ def test(name=None):
         output = classifier(input, seq_lengths)
         pred = output.data.max(1, keepdim=True)[1]
         correct += pred.eq(target.data.view_as(pred)).cpu().sum()
+        
     print('\nTest set: Accuracy: {}/{} ({:.0f}%)\n'.format(
         correct, len(test_loader.dataset), 100*correct/len(test_loader.dataset)
     ))
@@ -119,6 +120,7 @@ if __name__ == '__main__':
     
     optimizer = torch.optim.Adam(classifier.parameters(), lr=1e-3)
     criterion = nn.CrossEntropyLoss()
+
     start = time.time()
     for epoch in range(1, N_EPOCHS+1):
         train()
@@ -127,3 +129,4 @@ if __name__ == '__main__':
         test('Fantashi')
         test('Tommy')
         test('Vladimir')
+        print('\nTime excute: {}\n' % time.time() - start)
