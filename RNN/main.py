@@ -129,4 +129,4 @@ if __name__ == '__main__':
         test('Fantashi')
         test('Tommy')
         test('Vladimir')
-        print('\nTime excute: {}\n' % time.time() - start)
+        print('\nTime excute: {}\n'.format(time.time() - start))
