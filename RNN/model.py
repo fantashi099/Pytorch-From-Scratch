@@ -2,7 +2,7 @@ import torch
 import torch.nn as nn
 from torch.autograd import Variable
 
-from torch.nn.utils.rnn import pack_padded_sequence, pad_packed_sequence
+from torch.nn.utils.rnn import pack_padded_sequence
 
 class RNNClasifier(nn.Module):
     def __init__(self, input_size, hidden_size, output_size, n_layers=1, bidirectional=True):
