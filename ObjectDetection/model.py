@@ -9,11 +9,11 @@ def get_instance_segmentation_model(num_classes):
     # FasterRCNN need to know the number of output channels in backbone.
     backbone.out_channels = 1280 # MobilenetV2 = 1280
 
-    # Make RPN generate 5x3 anchors per spatial location,
-    # 5 different sizes and 3 different aspect ratio.
+    # Make RPN generate 4x3 anchors per spatial location,
+    # 4 different sizes and 3 different aspect ratio.
     # Tuple[Tuple[int]] ~ each feature map could potentially have
     # different sizes and aspect ratios
-    anchor_generator = AnchorGenerator(sizes=((32,64,128,256,512),),
+    anchor_generator = AnchorGenerator(sizes=((32,64,128,256),),
                         aspect_ratios=((0.5,1.0,2.0),))
     
     # Define what feature maps will be used to perform region of interest

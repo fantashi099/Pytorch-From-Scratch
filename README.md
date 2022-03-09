@@ -12,6 +12,8 @@
 * [Inception](./Inception/main.py)
 * [RestNet](./ResNet/main.py)
 * [DenseNet](./DenseNet/main.py)
+* [Object Detection](./ObjectDetection//main.py)
 
 #### 2. Projects
+* [Name Nationality Classification with GRU](./RNN/main.py)
 * [Sentiment Analysis with PhoBERT](./Sentiment_Analysis/PhoBERT_K_Fold.ipynb)

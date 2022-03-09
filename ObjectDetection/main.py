@@ -7,6 +7,10 @@ import torch.optim as optim
 import torch
 from PIL import Image
 
+# https://discuss.pytorch.org/t/maskrcnn-with-mobilenet-backbone/111837
+# https://discuss.pytorch.org/t/instance-segmentation-mask-r-cnn-change-backbone-fine-tuning/62323
+# https://discuss.pytorch.org/t/change-backbone-in-maskrcnn/124198/5
+
 def test_model(model, dataset, index, device):
     img, _ = dataset[index]
     model.eval()
@@ -23,7 +27,8 @@ def test_model(model, dataset, index, device):
 def predict_img(model, path):
     img = Image.open(path)
     preprocess = transforms.Compose([
-        transforms.Resize(256),
+        # https://discuss.pytorch.org/t/runtimeerror-stack-expects-each-tensor-to-be-equal-size-but-got-3-224-224-at-entry-0-and-3-224-336-at-entry-3/87211
+        transforms.Resize((256,256)),
         transforms.CenterCrop(224),
         transforms.ToTensor(),
         transforms.Normalize(mean=[0.485, 0.456, 0.406], std=[0.229, 0.224, 0.225]),

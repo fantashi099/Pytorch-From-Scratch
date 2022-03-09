@@ -5,6 +5,10 @@ import torch
 from torch.utils.data import Dataset, Subset, DataLoader
 from PIL import Image
 import transforms as T
+import utils
+
+# https://discuss.pytorch.org/t/dataloader-gives-stack-expects-each-tensor-to-be-equal-size-due-to-different-image-has-different-objects-number/91941/7
+# https://discuss.pytorch.org/t/runtimeerror-stack-expects-each-tensor-to-be-equal-size-but-got-3-224-224-at-entry-0-and-3-224-336-at-entry-3/87211/10
 
 class PennFudanDataset(Dataset):
     """
@@ -100,8 +104,8 @@ def get_data():
     dataset = Subset(dataset, indices[:-25])
     testset = Subset(testset, indices[-25:])
 
-    data_loader = DataLoader(dataset, batch_size=32, shuffle=True, num_workers=2)
-    test_loader = DataLoader(testset, batch_size=16, shuffle=True, num_workers=2)
+    data_loader = DataLoader(dataset, batch_size=32, shuffle=True, num_workers=2, collate_fn=utils.collate_fn)
+    test_loader = DataLoader(testset, batch_size=16, shuffle=True, num_workers=2, collate_fn=utils.collate_fn)
     return data_loader, test_loader
 
 if __name__ == '__main__':
