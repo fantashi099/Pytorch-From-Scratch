@@ -61,7 +61,7 @@ class PennFudanDataset(Dataset):
             xmin = np.min(pos[1])
             xmax = np.max(pos[1])
             ymin = np.min(pos[0])
-            ymax = np.min(pos[0])
+            ymax = np.max(pos[0])
             boxes.append([xmin, ymin, xmax, ymax])
         
         boxes = torch.as_tensor(boxes, dtype=torch.float32)
