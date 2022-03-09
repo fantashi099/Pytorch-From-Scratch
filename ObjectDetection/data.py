@@ -104,8 +104,8 @@ def get_data():
     dataset = Subset(dataset, indices[:-25])
     testset = Subset(testset, indices[-25:])
 
-    data_loader = DataLoader(dataset, batch_size=32, shuffle=True, num_workers=2, collate_fn=utils.collate_fn)
-    test_loader = DataLoader(testset, batch_size=16, shuffle=True, num_workers=2, collate_fn=utils.collate_fn)
+    data_loader = DataLoader(dataset, batch_size=2, shuffle=True, num_workers=2, collate_fn=utils.collate_fn)
+    test_loader = DataLoader(testset, batch_size=1, shuffle=True, num_workers=2, collate_fn=utils.collate_fn)
     return data_loader, test_loader
 
 if __name__ == '__main__':
