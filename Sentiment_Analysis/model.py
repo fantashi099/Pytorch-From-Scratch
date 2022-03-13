@@ -13,15 +13,12 @@ class SentimentClassifier(nn.Module):
         nn.init.normal_(self.fc.bias, 0)
 
     def forward(self, input_ids, attention_mask):
-        last_hidden_state, idontknow, output = self.bert(
+        last_hidden_state, output = self.bert(
             input_ids=input_ids,
-            attention_mask=attention_mask
+            attention_mask=attention_mask,
+            return_dict=False # Dropout will errors if without this
         )
 
-        x = torch.cat((output[-1], output[-2]), dim=-1)
         x = self.drop(output)
         x = self.fc(x)
-        start_logits, end_logits = x.split(1, dim=-1)
-        start_logits = start_logits.squeeze(-1)
-        end_logits = end_logits.squeeze(-1)
-        return start_logits, end_logits
+        return x

@@ -1,9 +1,11 @@
 import torch
+import numpy as np
 import torch.nn as nn
 from transformers import get_linear_schedule_with_warmup
 import matplotlib.pyplot as plt
 from multiprocessing import freeze_support
 from torch.optim import AdamW
+from collections import defaultdict
 
 from data import get_data
 from model import SentimentClassifier
@@ -22,7 +24,7 @@ def train():
 
     for data in train_loader:
         input_ids = data['input_ids'].to(device)
-        attention_mask = data['attention_mask'].to(device)
+        attention_mask = data['attention_masks'].to(device)
         targets = data['targets'].to(device)
 
         optimizer.zero_grad()
@@ -54,7 +56,7 @@ def test(test_data = False):
         data_loader = test_loader if test_data else valid_loader
         for data in data_loader:
             input_ids = data['input_ids'].to(device)
-            attention_mask = data['attention_mask'].to(device)
+            attention_mask = data['attention_masks'].to(device)
             targets = data['targets'].to(device)
 
             outputs = model(
@@ -84,9 +86,9 @@ if __name__ == '__main__':
     criterion = nn.CrossEntropyLoss()
     # Recommendation by BERT: lr: 5e-5, 2e-5, 3e-5
     # Batchsize: 16, 32
-    optimizer = AdamW(model.parameters(), lr=2e-5, correct_bias=False)
+    optimizer = AdamW(model.parameters(), lr=2e-5)
     
-    history = {}
+    history = defaultdict(list)
     best_acc = 0
     epochs = 10
 
