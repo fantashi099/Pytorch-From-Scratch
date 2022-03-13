@@ -1,8 +1,9 @@
 import torch
 import torch.nn as nn
-from transformers import AdamW, get_linear_schedule_with_warmup
+from transformers import get_linear_schedule_with_warmup
 import matplotlib.pyplot as plt
 from multiprocessing import freeze_support
+from torch.optim import AdamW
 
 from data import get_data
 from model import SentimentClassifier
@@ -79,7 +80,7 @@ if __name__ == '__main__':
     device = torch.device('cuda:0' if torch.cuda.is_available() else 'cpu')
     train_loader, valid_loader, test_loader = get_data()
 
-    model = SentimentClassifier().to(device)
+    model = SentimentClassifier(7).to(device)
     criterion = nn.CrossEntropyLoss()
     # Recommendation by BERT: lr: 5e-5, 2e-5, 3e-5
     # Batchsize: 16, 32
@@ -88,7 +89,7 @@ if __name__ == '__main__':
     history = {}
     best_acc = 0
     epochs = 10
-    
+
     lr_scheduler = get_linear_schedule_with_warmup(
                 optimizer, 
                 num_warmup_steps=0, 

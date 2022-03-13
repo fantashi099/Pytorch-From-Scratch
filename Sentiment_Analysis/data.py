@@ -6,7 +6,7 @@ from gensim.utils import simple_preprocess
 from torch.utils.data import Dataset, DataLoader
 
 class SentimentDataset(Dataset):
-    def __init__(self, path, max_len=100):
+    def __init__(self, path, max_len=120):
         df = pd.read_excel(path, sheet_name=None)['Sheet1']
         self.df = df
         self.max_len = max_len
@@ -26,9 +26,8 @@ class SentimentDataset(Dataset):
                 text
                 targets
         """
-        data = {}
         row = self.df.iloc[index]
-        text, label = get_input_data(row)
+        text, label = self.get_input_data(row)
 
         # Encode_plus will:
         # (1) split text into token
@@ -39,30 +38,47 @@ class SentimentDataset(Dataset):
         # (6) Return a dictionary of outputs
         encoding = self.tokenizer.encode_plus(
             text,
+            truncation=True,
             add_special_tokens=True,
             max_length=self.max_len,
-            return_token_type_ids=False,
-            pad_to_max_length=True,
+            padding='max_length',
             return_attention_mask=True,
+            return_token_type_ids=False,
             return_tensors='pt',
         )
-
-        data = {}
-        data['input_ids'] = encoding['input_ids'].flatten(),
-        data['attention_masks'] = encoding['attention_mask'].flatten(),
-        data['text'] = text,
-        data['targets']  = torch.LongTensor(label)
         
-        return data
+        return {
+            'text': text,
+            'input_ids': encoding['input_ids'].flatten(),
+            'attention_masks': encoding['attention_mask'].flatten(),
+            'targets': torch.tensor(label, dtype=torch.long),
+        }
+
+
+    def labelencoder(self,text):
+        if text=='Enjoyment':
+            return 0
+        elif text=='Disgust':
+            return 1
+        elif text=='Sadness':
+            return 2
+        elif text=='Anger':
+            return 3
+        elif text=='Surprise':
+            return 4
+        elif text=='Fear':
+            return 5
+        else:
+            return 6
 
     def get_input_data(self, row):
         text = row['Sentence']
         text = ' '.join(simple_preprocess(text))
-        label = row['Emotion']
+        label = self.labelencoder(row['Emotion'])
 
         return text, label
 
-def get_data_loaders(path, batch_size, max_len=100):
+def get_data_loaders(path, batch_size, max_len=120):
     return DataLoader(
         SentimentDataset(path, max_len),
         batch_size=batch_size,
@@ -89,3 +105,11 @@ def get_data():
     test_loader = get_data_loaders('./data/UIT-VSMEC/test_nor_811.xlsx', 16)
 
     return train_loader, valid_loader, test_loader
+
+if __name__ == '__main__':
+    train_loader, valid_loader, test_loader = get_data()
+    data = next(iter(train_loader))
+    print(data)
+    print(data['input_ids'].shape)
+    print(data['attention_masks'].shape)
+    print(data['targets'].shape)
