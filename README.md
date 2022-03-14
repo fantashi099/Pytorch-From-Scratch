@@ -6,14 +6,20 @@
 
 <br/>
 
+### Usage:
+```sh
+$ python ./__folder__/main.py
+```
+
+
 ## Table of Contents
 
 #### 1. Modern Convolutional Neural Networks
-* [Inception](./Inception/main.py)
-* [RestNet](./ResNet/main.py)
-* [DenseNet](./DenseNet/main.py)
-* [Object Detection](./ObjectDetection//main.py)
+* [Inception](./Inception/README.md)
+* [RestNet](./ResNet/README.md)
+* [DenseNet](./DenseNet/README.md)
+* [Object Detection](./ObjectDetection/README.md)
 
 #### 2. Projects
-* [Name Nationality Classification with GRU](./RNN/main.py)
-* [Sentiment Analysis with PhoBERT](./Sentiment_Analysis/PhoBERT_K_Fold.ipynb)
+* [Name Nationality Classification with GRU](./RNN/README.md)
+* [Sentiment Analysis with PhoBERT](./Sentiment_Analysis/README.md)

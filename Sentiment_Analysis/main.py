@@ -151,7 +151,7 @@ if __name__ == '__main__':
     lr_scheduler = get_linear_schedule_with_warmup(
                 optimizer, 
                 num_warmup_steps=0, 
-                num_training_steps=len(train_loader)*epochs
+                num_training_steps=len(train_loader)
             )
 
     for epoch in range(epochs):

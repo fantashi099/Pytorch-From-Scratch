@@ -17,7 +17,7 @@ eggs/
 lib/
 lib64/
 HousePrices/
-data/
+data/cifar-10-batches-py
 Inception/data
 ResNet/data
 parts/
