@@ -6,11 +6,11 @@ from gensim.utils import simple_preprocess
 from torch.utils.data import Dataset, DataLoader
 
 class SentimentDataset(Dataset):
-    def __init__(self, path, max_len=120):
+    def __init__(self, path, tokenizer, max_len=120):
         df = pd.read_excel(path, sheet_name=None)['Sheet1']
         self.df = df
         self.max_len = max_len
-        self.tokenizer = AutoTokenizer.from_pretrained("vinai/phobert-base", use_fast=False)
+        self.tokenizer = tokenizer
     
     def __len__(self):
         return len(self.df)
@@ -78,9 +78,9 @@ class SentimentDataset(Dataset):
 
         return text, label
 
-def get_data_loaders(path, batch_size, max_len=120):
+def get_data_loaders(path, tokenizer, batch_size, max_len=120):
     return DataLoader(
-        SentimentDataset(path, max_len),
+        SentimentDataset(path, tokenizer, max_len),
         batch_size=batch_size,
         shuffle=True,
         num_workers=2
@@ -99,10 +99,10 @@ def get_max_len(path1, path2, path3):
     # output = 164
     return max([len(text) for text in encoded_text])
 
-def get_data():
-    train_loader = get_data_loaders('./data/UIT-VSMEC/train_nor_811.xlsx', 16)
-    valid_loader = get_data_loaders('./data/UIT-VSMEC/valid_nor_811.xlsx', 16)
-    test_loader = get_data_loaders('./data/UIT-VSMEC/test_nor_811.xlsx', 16)
+def get_data(tokenizer):
+    train_loader = get_data_loaders(path='./data/UIT-VSMEC/train_nor_811.xlsx', tokenizer=tokenizer, batch_size=16)
+    valid_loader = get_data_loaders(path='./data/UIT-VSMEC/valid_nor_811.xlsx', tokenizer=tokenizer, batch_size=16)
+    test_loader = get_data_loaders(path='./data/UIT-VSMEC/test_nor_811.xlsx', tokenizer=tokenizer, batch_size=16)
 
     return train_loader, valid_loader, test_loader
 
