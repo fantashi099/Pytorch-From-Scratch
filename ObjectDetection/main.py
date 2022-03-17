@@ -58,6 +58,8 @@ if __name__ == '__main__':
         # Update learning rate
         lr_scheduler.step()
         evaluate(model, test_loader, device=device)
+    
+    torch.save(model.state_dict(), './ObjectDetection/final_model.bin')
 
 
 
