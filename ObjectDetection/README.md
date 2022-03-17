@@ -1,4 +1,4 @@
-### Reimplement Object Detection with MaskRCNN (MobilenetV2)
+### Reimplement Object Detection with MaskRCNN
 
 dataset: https://www.cis.upenn.edu/~jshi/ped_html/
 
