@@ -34,9 +34,10 @@ def predict_img(model, path):
         transforms.Normalize(mean=[0.485, 0.456, 0.406], std=[0.229, 0.224, 0.225]),
     ])
     input_tensor = preprocess(img)
-    # create a mini-batch as expected by the mode
-    # input_batch = input_tensor.unsqueeze(0)
-    pred = model([input_tensor])
+    # unsqueeze batch dimension, in case you are dealing with a single image
+    # (create a mini-batch as expected by the mode)
+    input_batch = input_tensor.unsqueeze(0)
+    pred = model([input_batch])
     return pred
 
 if __name__ == '__main__':

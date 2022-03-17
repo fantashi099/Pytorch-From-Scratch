@@ -20,6 +20,7 @@ HousePrices/
 data/cifar-10-batches-py
 Inception/data
 ResNet/data
+*.bin
 parts/
 sdist/
 var/
