@@ -9,3 +9,4 @@ UIT-VSMEC dataset: http://nlp.uit.edu.vn/datasets/
 * https://curiousily.com/posts/sentiment-analysis-with-bert-and-hugging-face-using-pytorch-and-python/
 * https://www.kaggle.com/shoheiazuma/tweet-sentiment-roberta-pytorch/notebook#Inference
 * https://www.kaggle.com/abhishek/bert-base-uncased-using-pytorch/notebook#Evaluation-Functions
+* https://discuss.pytorch.org/t/how-average-all-predictions-when-using-kfold-cross-validation/96739

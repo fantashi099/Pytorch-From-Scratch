@@ -107,7 +107,8 @@ def get_data(tokenizer):
     return train_loader, valid_loader, test_loader
 
 if __name__ == '__main__':
-    train_loader, valid_loader, test_loader = get_data()
+    tokenizer = AutoTokenizer.from_pretrained("vinai/phobert-base", use_fast=False)
+    train_loader, valid_loader, test_loader = get_data(tokenizer)
     data = next(iter(train_loader))
     print(data)
     print(data['input_ids'].shape)

@@ -11,12 +11,6 @@ from collections import defaultdict
 from data import get_data
 from model import SentimentClassifier
 
-def loss_fn(start_logits, end_logits, start_positions, end_positions):
-    ce_loss = nn.CrossEntropyLoss()
-    start_loss = ce_loss(start_logits, start_positions)
-    end_loss = ce_loss(end_logits, end_positions)    
-    total_loss = start_loss + end_loss
-    return total_loss
 
 def train():
     model.train()
@@ -151,7 +145,7 @@ if __name__ == '__main__':
     lr_scheduler = get_linear_schedule_with_warmup(
                 optimizer, 
                 num_warmup_steps=0, 
-                num_training_steps=len(train_loader)
+                num_training_steps=len(train_loader)*epochs
             )
 
     for epoch in range(epochs):
